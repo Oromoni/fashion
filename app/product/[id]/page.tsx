@@ -12,7 +12,10 @@ import { toast } from "sonner";
 
 export default function ProductPage() {
   const params = useParams();
-  const id = parseInt(params.id!, 10);
+   const idParam = Array.isArray(params.id) ? params.id[0] : params.id;
+
+  // Parse to number
+  const id = idParam ? parseInt(idParam, 10) : NaN;
   const product = data.find((item) => item.id === id);
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -58,32 +61,32 @@ export default function ProductPage() {
     setIsDropdownOpen(false);
   };
 
-  const handleAddToCart = () => {
-    // ✅ Convert price safely (handles strings like "£7,200.00")
-    const numericPrice =
-      typeof product.price === "number"
-        ? product.price
-        : Number(String(product.price).replace(/[^0-9.-]+/g, ""));
+  // const handleAddToCart = () => {
+  //   // ✅ Convert price safely (handles strings like "£7,200.00")
+  //   const numericPrice =
+  //     typeof product.price === "number"
+  //       ? product.price
+  //       : Number(String(product.price).replace(/[^0-9.-]+/g, ""));
 
-    const itemToAdd = {
-      id: product.id,
-      name: product.name,
-      price: numericPrice,
-      images: product.images,
-      quantity: 1,
-      size: selectedSize,
-    };
+  //   const itemToAdd = {
+  //     id: product.id,
+  //     name: product.name,
+  //     price: numericPrice,
+  //     images: product.images,
+  //     quantity: 1,
+  //     size: selectedSize,
+  //   };
 
-    console.log("Product to add:", itemToAdd);
-    console.log("Before add:", useCartStore.getState().items);
+  //   console.log("Product to add:", itemToAdd);
+  //   console.log("Before add:", useCartStore.getState().items);
 
-    addToCart(itemToAdd);
+  //   addToCart(itemToAdd);
 
-    console.log("✅ Added to cart:", itemToAdd);
-    console.log("🛒 Cart now contains:", useCartStore.getState().items);
+  //   console.log("✅ Added to cart:", itemToAdd);
+  //   console.log("🛒 Cart now contains:", useCartStore.getState().items);
 
-    toast(`${product.name} added to cart`);
-  };
+  //   toast(`${product.name} added to cart`);
+  // };
 
   return (
     <section className="bg-white min-h-screen text-black relative">

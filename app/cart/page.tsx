@@ -1,12 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useCartStore } from "../stores/cartstore";
 
 export default function CartPage() {
-  // ✅ Match the actual key name in your Zustand store (usually "items")
   const items = useCartStore((state) => state.items);
 
-  // ✅ Ensure items is always an array before using reduce
   const total = Array.isArray(items)
     ? items.reduce((acc, item) => acc + item.price * item.quantity, 0)
     : 0;
@@ -20,31 +19,37 @@ export default function CartPage() {
       ) : (
         <div className="space-y-4">
           {items.map((item) => (
-            <div key={item.id} className="flex flex-col justify-between  min-h-80 bg-green-500 border-b ">
+            <div key={item.id} className="flex flex-col justify-between min-h-80 bg-green-500 border-b">
               <div className="border-b flex">
-                <img src={item.images[0]} alt="product image" className="h-40" />
-                <p className="items-center flex text-center">{item.name}</p>
-                
-                
+                <div className="relative h-40 w-40 flex-shrink-0">
+                  <Image
+                    src={item.images[0]}
+                    alt={item.name}
+                    fill
+                    style={{ objectFit: "contain" }} // keeps aspect ratio
+                    className="rounded"
+                  />
+                </div>
+                <p className="items-center flex text-center ml-4">{item.name}</p>
               </div>
+
               <div className="flex-col p-2 bg-pink-600">
                 <div className="flex justify-between">
-                    <div>Colour</div>
-                    <div>Monogram Snowy Pearl</div>
+                  <div>Colour</div>
+                  <div>Monogram Snowy Pearl</div>
                 </div>
                 <div className="flex justify-between">
-                    <div>Materials</div>
-                    <div>Monogram Canvas</div>
+                  <div>Materials</div>
+                  <div>Monogram Canvas</div>
                 </div>
                 <div className="flex justify-between">
-                    <div>input</div>
-                    <div>$ {item.price}</div>
+                  <div>Price</div>
+                  <div>$ {item.price}</div>
                 </div>
                 <div className="flex justify-between">
-                    <div>1</div>
-                    <div>2</div>
+                  <div>Qty</div>
+                  <div>{item.quantity}</div>
                 </div>
-               
               </div>
             </div>
           ))}

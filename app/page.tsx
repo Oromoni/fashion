@@ -69,7 +69,7 @@ function HoverVideo({
 }
 
 export default function Home() {
-  const sections = useRef<HTMLDivElement[]>([]);
+  const sections = useRef<(HTMLDivElement | null)[]>([]);
   const animating = useRef(false);
   const active = useRef(0);
   const MAX_SECTION = 5;
@@ -79,7 +79,7 @@ export default function Home() {
   const imgRef = useRef<HTMLImageElement | null>(null);
 
   // dropdown & showMore states
-  const [newDropdown, setNewDropdown] = useState(false);
+  //const [newDropdown, setNewDropdown] = useState(false);
   const [filterDropdown, setFilterDropdown] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [contrast, setContrast] = useState(false);
@@ -289,7 +289,8 @@ export default function Home() {
       {/* Section 1 */}
       <section
         id="section-0"
-        ref={(el) => (sections.current[0] = el!)}
+         ref={(el) => {sections.current[0] = el as HTMLDivElement;
+  }}
         className="absolute inset-0 overflow-y-auto scrollbar-hide"
       >
         <div className="flex flex-col md:flex-row h-screen">
@@ -301,7 +302,9 @@ export default function Home() {
       {/* Section 2 - Curtain */}
       <section
         id="section-1"
-        ref={(el) => (sections.current[1] = el!)}
+         ref={(el) => {
+    sections.current[1] = el as HTMLDivElement;
+  }}
         className="absolute inset-0 overflow-y-auto scrollbar-hide flex items-center justify-center bg-white"
       >
         <div
@@ -321,7 +324,9 @@ export default function Home() {
       {/* Section 3 - Product Listing */}
       <section
         id="section-2"
-        ref={(el) => (sections.current[2] = el!)}
+        ref={(el) => {
+    sections.current[2] = el as HTMLDivElement;;
+  }}
         className="absolute inset-0 overflow-y-auto scrollbar-hide flex flex-col items-center justify-start bg-white p-0 space-y-8"
       >
         {/* Top Buttons */}
@@ -370,7 +375,7 @@ export default function Home() {
                 <div className="ml-6">
                   <p className="text-xs text-black">New</p>
                   <h3 className="text-xs text-black mb-1 truncate">{product.name}</h3>
-                  <p className="text-xs text-gray-600">{product.price}</p>
+                  <p className="text-xs text-gray-600">$ {product.price}</p>
                 </div>
               </div>
             </Link>
@@ -410,7 +415,9 @@ export default function Home() {
     
 <section
   id="section-3"
-  ref={(el) => (sections.current[3] = el!)}
+   ref={(el) => {
+    sections.current[3] = el as HTMLDivElement;;
+  }}
   className="absolute inset-0 overflow-y-auto scrollbar-hide flex flex-col items-center justify-start bg-white text-gray-900 p-8"
 >
   {/* Heading */}
@@ -469,7 +476,9 @@ export default function Home() {
       {/* Section 5 */}
       <section
         id="section-4"
-        ref={(el) => (sections.current[4] = el!)}
+         ref={(el) => {
+    sections.current[4] = el as HTMLDivElement;
+  }}
         className="absolute inset-0 overflow-y-auto scrollbar-hide flex items-center justify-center bg-white text-white text-4xl"
       >
             <div
